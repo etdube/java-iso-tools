@@ -47,6 +47,9 @@ public class JolietNamingConventions extends NamingConventions {
         super("Joliet");
         jolietMaxChars = maxChars;
         this.failOnTruncation = failOnTruncation;
+        if (VERBOSE) {
+            System.out.println(String.format("jolietMaxChars: %d, failOnTruncation: %s", jolietMaxChars, this.failOnTruncation));
+        }
     }
 
     public void apply(ISO9660Directory dir) throws HandlerException {
@@ -57,8 +60,18 @@ public class JolietNamingConventions extends NamingConventions {
 
         String filename = normalize(dir.getName());
 
-        if (filename.length() > 64) {
-            filename = filename.substring(0, 64);
+        if (filename.length() > jolietMaxChars) {
+            if (failOnTruncation) {
+                throw new HandlerException("Directory " + dir.getName() + " is longer than the maximum Joliet name of " + jolietMaxChars + " characters");
+            }
+
+            String newFilename = filename.substring(0, jolietMaxChars);
+
+            if (VERBOSE) {
+                System.out.println(String.format("Truncating \"%s\" to \"%s\"", filename, newFilename));
+            }
+
+            filename = newFilename;
         }
 
         if (filename.length() == 0) {

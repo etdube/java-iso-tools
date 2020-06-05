@@ -31,8 +31,10 @@ public class JolietConfig extends StandardConfig {
             {0x25, 0x2F, 0x43},
             {0x25, 0x2F, 0x45}};
     int ucs2_level;
-    
-	private int maxCharsInFilename = 64;
+
+    public static final int DEFAULT_MAX_CHARS_IN_FILENAME = 64;
+
+	private int maxCharsInFilename = DEFAULT_MAX_CHARS_IN_FILENAME;
 	
 	private boolean failOnTruncation;
 

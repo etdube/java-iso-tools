@@ -64,6 +64,8 @@ public class IsoTask extends MatchingTask {
     private boolean allowASCII;
     private boolean restrictDirDepthTo8;
     private boolean forceDotDelimiter;
+    private boolean failOnJolietFilenameTruncation;
+    private int maxJolietFilenameLength;
     private boolean mkisofsCompatibility;
     private boolean forcePortableFilenameCharacterSet;
     private boolean enableJoliet;
@@ -85,6 +87,8 @@ public class IsoTask extends MatchingTask {
         allowASCII = false;
         restrictDirDepthTo8 = true;
         forceDotDelimiter = true;
+        failOnJolietFilenameTruncation = false;
+        maxJolietFilenameLength = JolietConfig.DEFAULT_MAX_CHARS_IN_FILENAME;
         interchangeLevel = 1;
         mkisofsCompatibility = true;
         forcePortableFilenameCharacterSet = true;
@@ -159,6 +163,8 @@ public class IsoTask extends MatchingTask {
                 jolietConfig.setPublisher(publisher);
                 jolietConfig.setDataPreparer(dataPreparer);
                 jolietConfig.forceDotDelimiter(forceDotDelimiter);
+                jolietConfig.setFailOnTruncation(failOnJolietFilenameTruncation);
+                jolietConfig.setMaxCharsInFilename(maxJolietFilenameLength);
                 if (copyrightFileObj != null) {
                     jolietConfig.setCopyrightFile(copyrightFileObj);
                 }
@@ -335,6 +341,14 @@ public class IsoTask extends MatchingTask {
 
     public void setForceDotDelimiter(boolean forceDotDelimiter) {
         this.forceDotDelimiter = forceDotDelimiter;
+    }
+
+    public void setFailOnJolietFilenameTruncation(boolean failOnJolietFilenameTruncation) {
+        this.failOnJolietFilenameTruncation = failOnJolietFilenameTruncation;
+    }
+
+    public void setMaxJolietFilenameLength(int maxJolietFilenameLength) {
+        this.maxJolietFilenameLength = maxJolietFilenameLength;
     }
 
     public void setRestrictDirDepthTo8(boolean restrictDirDepthTo8) {
